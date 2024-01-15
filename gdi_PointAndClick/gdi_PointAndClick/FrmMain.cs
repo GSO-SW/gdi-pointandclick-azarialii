@@ -43,7 +43,7 @@ namespace gdi_PointAndClick
                 }
                
             }
-            if (RechtangleContains)
+            if (RechtangleContains==false)
             {
                 Rectangle r = new Rectangle(mausposition.X - 20, mausposition.Y - 20, 40, 40);
 

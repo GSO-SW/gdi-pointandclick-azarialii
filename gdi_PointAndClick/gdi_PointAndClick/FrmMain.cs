@@ -19,8 +19,10 @@ namespace gdi_PointAndClick
             int w = this.ClientSize.Width;
             int h = this.ClientSize.Height;
 
+            //Farben 
+            var rand = new Random();
             // Zeichenmittel
-            Brush b = new SolidBrush(Color.Black);
+            Brush b = new SolidBrush(Color.FromArgb(rand.Next(0,256), rand.Next(0, 256), 0));
 
 
             for (int i = 0; i < rectangles.Count; i++)
@@ -32,6 +34,8 @@ namespace gdi_PointAndClick
 
         private void FrmMain_MouseClick(object sender, MouseEventArgs e)
         {
+       
+            
             Point mausposition = e.Location;
             bool RechtangleContains= false;
             for (int i = 0; i < rectangles.Count; i++)
@@ -45,13 +49,29 @@ namespace gdi_PointAndClick
             }
             if (RechtangleContains==false)
             {
-                Rectangle r = new Rectangle(mausposition.X - 20, mausposition.Y - 20, 40, 40);
+                var rand = new Random();
+                int RechtangleSize = rand.Next(0, 50);
+                Rectangle r = new Rectangle(mausposition.X -(RechtangleSize/2), mausposition.Y - (RechtangleSize/2), RechtangleSize, RechtangleSize);
 
                 rectangles.Add(r);  // Kurze Variante: rectangles.Add( new Rectangle(...)  );
 
                 Refresh();
             }
-           
+            if (e.Button == MouseButtons.Left)
+            {
+                
+                    for (int i = 0; i < rectangles.Count; i++)
+                    {
+                        if (rectangles[i].Contains(mausposition))
+                        {
+                        rectangles.Remove(rectangles[i]);
+                            break;
+                        }
+
+                    }
+                
+            }
+
         }
 
         private void FrmMain_KeyDown(object sender, KeyEventArgs e)
